@@ -1,40 +1,77 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactiveButton from 'reactive-button';
 
+const fetchPicture = async () => {
+  try {
+    const res = await fetch('https://randomfox.ca/floof/');
+    const data = await res.json();
+    console.log('fetching image');
+    console.log(data.image);
+    return data;
+  }
+  catch (err) {
+    alert(err);
+  }
+}
+
+const fetchFact = async () => {
+  try {
+    const res = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random');
+    const data = await res.json();
+    console.log('fetching quote');
+    console.log(data.image);
+    return data;
+  }
+  catch (err) {
+    alert(err);
+  }
+}
 
 function App() {
-  const [picture, setPicture] = useState(null);
+  const [picture, setPicture] = useState('');
+  const [fact, setFact] = useState('');
 
-  const fetchPicture = async () => {
+  useEffect(() => {
+    handleFox();
+    handleQuote();
+  }, [])
+
+  const handleFox = async () => {
     try {
-      const res = await fetch('https://randomfox.ca/floof/');
-      const data = await res.json();
-      setPicture(data.image);
-      return data;
+      const fox = await fetchPicture();
+      setPicture(fox.image);
+      handleQuote();
     }
     catch (err) {
       alert(err);
     }
   }
-  const handleFox = async () => {
-    const fox = await fetchPicture();
-    setPicture(fox.image);
+  const handleQuote = async () => {
+    try {
+      const qoute = await fetchFact();
+      setFact(qoute.text);
+    }
+    catch (err) {
+      alert(err);
+    }
   }
 
   return (
-    <div>
+    <div class='App'>
       <img alt="foxes" src={picture}></img>
-      <p>
-        <ReactiveButton onClick={handleFox}
-          color="green"
-          size='large'
-          rounded
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+        <ReactiveButton
+          onClick={handleFox}
+          color="yellow"
+          size='medium'
           idleText="Next"
           loadingText="Loading"
           successText="Done" />
-      </p>
-    </div>
+      </div>
+      <div class='Facts'>{fact}</div>
+    </div >
   );
 }
 
