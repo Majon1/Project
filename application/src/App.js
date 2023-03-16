@@ -20,7 +20,7 @@ const fetchFact = async () => {
     const res = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random');
     const data = await res.json();
     console.log('fetching quote');
-    console.log(data.image);
+    console.log(data.text);
     return data;
   }
   catch (err) {
@@ -34,7 +34,6 @@ function App() {
 
   useEffect(() => {
     handleFox();
-    handleQuote();
   }, [])
 
   const handleFox = async () => {
@@ -61,7 +60,6 @@ function App() {
     <div class='App'>
       <img alt="foxes" src={picture}></img>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-
         <ReactiveButton
           onClick={handleFox}
           color="yellow"
@@ -74,5 +72,4 @@ function App() {
     </div >
   );
 }
-
 export default App;
