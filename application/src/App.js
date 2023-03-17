@@ -57,7 +57,7 @@ function App() {
   }
 
   return (
-    <div class='App'>
+    <div className='App'>
       <img alt="foxes" src={picture}></img>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ReactiveButton
@@ -68,7 +68,7 @@ function App() {
           loadingText="Loading"
           successText="Done" />
       </div>
-      <div class='Facts'>{fact}</div>
+      <div className='Facts'>{fact}</div>
     </div >
   );
 }
