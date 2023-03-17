@@ -33,23 +33,16 @@ function App() {
   const [fact, setFact] = useState('');
 
   useEffect(() => {
-    handleFox();
+    console.log("useEffect");
+    handleClick();
   }, [])
 
-  const handleFox = async () => {
+  const handleClick = async () => {
     try {
       const fox = await fetchPicture();
+      const fact = await fetchFact();
       setPicture(fox.image);
-      handleQuote();
-    }
-    catch (err) {
-      alert(err);
-    }
-  }
-  const handleQuote = async () => {
-    try {
-      const qoute = await fetchFact();
-      setFact(qoute.text);
+      setFact(fact.text)
     }
     catch (err) {
       alert(err);
@@ -61,7 +54,7 @@ function App() {
       <img alt="foxes" src={picture}></img>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ReactiveButton
-          onClick={handleFox}
+          onClick={handleClick}
           color="yellow"
           size='medium'
           idleText="Next"
